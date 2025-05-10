@@ -47,6 +47,7 @@ def verify_webhook():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     data = request.json
+    print(json.dumps(data, indent=2, ensure_ascii=False))
     if 'entry' in data:
         for entry in data['entry']:
             for messaging_event in entry['messaging']:
@@ -54,34 +55,39 @@ def webhook():
 
                 # Приветственное сообщение
                 send_message(sender_id, {"text": "Привет! Добро пожаловать в нашу шаурму-империю! 🍗"})
-
-                # Отправка сообщений по очереди
-                send_message(sender_id, {"text": "Это наш текстовый пример! 🍗"})
-                send_image_message(sender_id)
-                send_video_message(sender_id)
-                send_audio_message(sender_id)
-                send_file_message(sender_id)
-                send_button_template(sender_id)
-                send_generic_template(sender_id)
-                send_list_template(sender_id)
-                send_media_template(sender_id)
-                send_receipt_message(sender_id)
-                send_postback_message(sender_id)
-                send_web_url_button(sender_id)
-                send_phone_number_button(sender_id)
-                send_account_link_button(sender_id)
-                send_account_unlink_button(sender_id)
-                send_game_play_button(sender_id)
-                send_element_share_button(sender_id)
-                send_quick_replies(sender_id)
+                # # Отправка сообщений по очереди
+                # send_postback_message(sender_id)
+                # send_image_message(sender_id)
+                # #send_video_message(sender_id) #Нужна ссылка мр4
+                # #send_audio_message(sender_id) #Нужна ссылка мр3
+                # send_file_message(sender_id) #Только в мессенджер
+                # send_button_template(sender_id)
+                # send_generic_template(sender_id)
+                # #send_list_template(sender_id) #Непонятная ошибка
+                # #send_media_template(sender_id) #Нужна ссылка Facebook #Что это?
+                # send_receipt_message(sender_id)
+                # send_web_url_button(sender_id)
+                # send_phone_number_button(sender_id)
+                # #send_account_link_button(sender_id) #Что это?
+                # #send_account_unlink_button(sender_id) #Что это?
+                # #send_game_play_button(sender_id) #Что это?
+                # #send_element_share_button(sender_id) #Устарела в API 4.0, нужно новую добавить
+                # send_quick_replies(sender_id)
 
     return 'ok', 200
 
 
 # Функции для различных типов сообщений
 
+def send_postback_message(recipient_id):
+    message = {
+        "text": "Тест текстовое сообщение..."
+    }
+    send_message(recipient_id, message)
+
+
 def send_image_message(recipient_id):
-    image_url = 'https://example.com/image.jpg'  # Замени на реальный URL
+    image_url = 'https://shaurmama.com.ua/image/cache/catalog/assorti-450x280.jpg'  # Замени на реальный URL
     message = {
         "attachment": {
             "type": "image",
@@ -123,7 +129,7 @@ def send_audio_message(recipient_id):
 
 
 def send_file_message(recipient_id):
-    file_url = 'https://example.com/file.pdf'  # Замени на реальный URL
+    file_url = 'https://zagorie.ru/upload/iblock/4ea/4eae10bf98dde4f7356ebef161d365d5.pdf'  # Замени на реальный URL
     message = {
         "attachment": {
             "type": "file",
@@ -163,14 +169,38 @@ def send_generic_template(recipient_id):
                     {
                         "title": "Пример товара 1",
                         "subtitle": "Очень вкусная шаурма",
-                        "image_url": "https://example.com/product1.jpg",
-                        "buttons": [{"type": "web_url", "url": "https://example.com", "title": "Узнать больше"}]
+                        "image_url": "https://vseopecheni.ru/assets/cache_image/images/new/shaurma_535x400_968.webp",
+                        "buttons": [{"type": "web_url", "url": "https://recipes.vseopecheni.ru/shaurma-s-ryiboj", "title": "Узнать больше"}]
                     },
                     {
                         "title": "Пример товара 2",
                         "subtitle": "Острая шаурма",
-                        "image_url": "https://example.com/product2.jpg",
-                        "buttons": [{"type": "web_url", "url": "https://example.com", "title": "Узнать больше"}]
+                        "image_url": "https://cafesahara.ru/upload/resize_cache/iblock/514/1200_1200_1/514a5898917fabf5e25e0cf0121fb77c.jpg",
+                        "buttons": [{"type": "web_url", "url": "https://cafesahara.ru/dostavka/v-syrnom/iz-yagnyenka-v-syrnom-lavashe", "title": "Узнать больше"}]
+                    },
+                    {
+                        "title": "Пример товара 2",
+                        "subtitle": "Острая шаурма",
+                        "image_url": "https://cafesahara.ru/upload/resize_cache/iblock/514/1200_1200_1/514a5898917fabf5e25e0cf0121fb77c.jpg",
+                        "buttons": [{"type": "web_url", "url": "https://cafesahara.ru/dostavka/v-syrnom/iz-yagnyenka-v-syrnom-lavashe", "title": "Узнать больше"}]
+                    },
+                    {
+                        "title": "Пример товара 2",
+                        "subtitle": "Острая шаурма",
+                        "image_url": "https://cafesahara.ru/upload/resize_cache/iblock/514/1200_1200_1/514a5898917fabf5e25e0cf0121fb77c.jpg",
+                        "buttons": [{"type": "web_url", "url": "https://cafesahara.ru/dostavka/v-syrnom/iz-yagnyenka-v-syrnom-lavashe", "title": "Узнать больше"}]
+                    },
+                    {
+                        "title": "Пример товара 2",
+                        "subtitle": "Острая шаурма",
+                        "image_url": "https://cafesahara.ru/upload/resize_cache/iblock/514/1200_1200_1/514a5898917fabf5e25e0cf0121fb77c.jpg",
+                        "buttons": [{"type": "web_url", "url": "https://cafesahara.ru/dostavka/v-syrnom/iz-yagnyenka-v-syrnom-lavashe", "title": "Узнать больше"}]
+                    },
+                    {
+                        "title": "Пример товара 2",
+                        "subtitle": "Острая шаурма",
+                        "image_url": "https://cafesahara.ru/upload/resize_cache/iblock/514/1200_1200_1/514a5898917fabf5e25e0cf0121fb77c.jpg",
+                        "buttons": [{"type": "web_url", "url": "https://cafesahara.ru/dostavka/v-syrnom/iz-yagnyenka-v-syrnom-lavashe", "title": "Узнать больше"}]
                     }
                 ]
             }
@@ -189,13 +219,13 @@ def send_list_template(recipient_id):
                     {
                         "title": "Шаурма с курицей",
                         "subtitle": "Очень вкусная куриная шаурма",
-                        "image_url": "https://example.com/chicken_shawarma.jpg",
+                        "image_url": "https://st28.styapokupayu.ru/images/blog_posts/covers/000/317/229_large.jpg",
                         "buttons": [{"type": "postback", "title": "Добавить в корзину", "payload": "ADD_TO_CART"}]
                     },
                     {
                         "title": "Шаурма с говядиной",
                         "subtitle": "Очень сочная говяжья шаурма",
-                        "image_url": "https://example.com/beef_shawarma.jpg",
+                        "image_url": "https://st28.styapokupayu.ru/images/blog_posts/covers/000/317/229_large.jpg",
                         "buttons": [{"type": "postback", "title": "Добавить в корзину", "payload": "ADD_TO_CART"}]
                     }
                 ]
@@ -214,7 +244,7 @@ def send_media_template(recipient_id):
                 "elements": [
                     {
                         "media_type": "image",
-                        "url": "https://example.com/image.jpg",
+                        "url": "https://st28.styapokupayu.ru/images/blog_posts/covers/000/317/229_large.jpg",
                         "buttons": [{"type": "postback", "title": "Посмотреть подробнее", "payload": "MORE_INFO"}]
                     }
                 ]
@@ -234,26 +264,18 @@ def send_receipt_message(recipient_id):
                 "order_number": "123456",
                 "currency": "USD",
                 "payment_method": "Visa 1234",
-                "order_url": "https://example.com/receipt",
+                "order_url": "https://media-cdn.tripadvisor.com/media/photo-s/09/57/37/2b/caption.jpg",
                 "timestamp": "1428444852",
                 "elements": [
                     {"title": "Шаурма с курицей", "price": 10.00, "quantity": 1},
                     {"title": "Шаурма с говядиной", "price": 12.00, "quantity": 2}
                 ],
-                "address": {"street_1": "123 Main Street", "city": "Vientiane", "country": "Laos"},
-                "summary": {"subtotal": 34.00, "shipping": 5.00, "total_cost": 39.00}
+                "address": {"street_1": "123 Main Street", "city": "Vientiane capital","state": "Vientiane", "country": "Laos", "postal_code": "01030"},
+                "summary": {"subtotal": 34.00, "total_cost": 39.00}
             }
         }
     }
     send_message(recipient_id, message)
-
-
-def send_postback_message(recipient_id):
-    message = {
-        "text": "Вы нажали кнопку!"
-    }
-    send_message(recipient_id, message)
-
 
 def send_web_url_button(recipient_id):
     message = {
@@ -262,7 +284,7 @@ def send_web_url_button(recipient_id):
             "payload": {
                 "template_type": "button",
                 "text": "Перейти на сайт",
-                "buttons": [{"type": "web_url", "url": "https://example.com", "title": "Перейти"}]
+                "buttons": [{"type":"web_url", "url": "https://www.gastronom.ru", "title": "Перейти"}]
             }
         }
     }
@@ -283,14 +305,14 @@ def send_phone_number_button(recipient_id):
     send_message(recipient_id, message)
 
 
-def send_account_link_button(recipient_id):
+def send_account_link_button(recipient_id): # НЕ ПОНЯТНО ЧТО ЭТО
     message = {
         "attachment": {
             "type": "template",
             "payload": {
                 "template_type": "button",
                 "text": "Связать аккаунт",
-                "buttons": [{"type": "account_link", "url": "https://example.com/link_account"}]
+                "buttons": [{"type": "account_link", "url": "https://www.facebook.com/profile.php?id=61556526222721", "title": "Связать"}]
             }
         }
     }
@@ -304,7 +326,7 @@ def send_account_unlink_button(recipient_id):
             "payload": {
                 "template_type": "button",
                 "text": "Отключить аккаунт",
-                "buttons": [{"type": "account_unlink", "title": "Отключить"}]
+                "buttons": [{"type": "account_link", "url": "https://www.facebook.com/profile.php?id=61556526222721", "title": "Отключить"}]
             }
         }
     }
@@ -325,7 +347,7 @@ def send_game_play_button(recipient_id):
     send_message(recipient_id, message)
 
 
-def send_element_share_button(recipient_id):
+def send_element_share_button(recipient_id): # НЕ РАБОТАЕТ (API 4)
     message = {
         "attachment": {
             "type": "template",
