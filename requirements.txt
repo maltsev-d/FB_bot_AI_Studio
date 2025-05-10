@@ -1,3 +1,4 @@
-flask
 pyngrok
+flask
 python-dotenv
+requests
