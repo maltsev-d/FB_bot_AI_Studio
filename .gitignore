@@ -2,11 +2,8 @@
 .env
 
 
-# Игнорировать файлы
-start_ngrok.bat
-test_flask.py
-test_get.py
-curl_test.py
+# Игнорировать папку
+tests
 
 # Игнорировать PyCharm настройки и кэш
 .idea/

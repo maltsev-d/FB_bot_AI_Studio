@@ -1,62 +1,115 @@
-from flask import Flask, request, jsonify, abort
-from dotenv import load_dotenv
 import os
-import json
 import requests
+from flask import Flask, request, jsonify
+import json
 
-load_dotenv()
 app = Flask(__name__)
 
-VERIFY_TOKEN = os.getenv("FB_VERIFY_TOKEN")
-PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_TOKEN")
-FB_API_URL = "https://graph.facebook.com/v18.0/me/messages"
+# Убедитесь, что вы установили переменные окружения с токеном и верификационным кодом
+VERIFY_TOKEN = os.getenv("FB_VERIFY_TOKEN", "your_verify_token")  # Замените на ваш токен
+PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_TOKEN", "your_page_access_token")  # Замените на ваш токен страницы
 
+# Facebook Webhook Verification
+@app.route('/webhook', methods=['GET'])
+def verify():
+    # Проверка верификационного кода
+    if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
+        if request.args.get("hub.verify_token") == VERIFY_TOKEN:
+            return request.args["hub.challenge"], 200
+        return "Verification token mismatch", 403
+    return "Hello, this is the webhook", 200
 
-@app.route("/webhook", methods=["GET", "POST"])
+# Обработка входящих сообщений
+@app.route('/webhook', methods=['POST'])
 def webhook():
-    if request.method == "GET":
-        token = request.args.get("hub.verify_token")
-        challenge = request.args.get("hub.challenge")
-        if token == VERIFY_TOKEN:
-            return challenge, 200
-        else:
-            abort(403, description="Verification token mismatch")
+    data = request.get_json()
+    print(f"Received data: {json.dumps(data, indent=2)}")  # Логирование входящих данных для отладки
 
-    elif request.method == "POST":
-        data = request.get_json()
-        print("📩 Входящий запрос:")
-        print(json.dumps(data, indent=2, ensure_ascii=False))
+    if data.get("object") == "page":
+        for entry in data["entry"]:
+            for messaging_event in entry["messaging"]:
+                sender_id = messaging_event["sender"]["id"]
+                if messaging_event.get("message"):
+                    # Приветствие при получении сообщения
+                    send_greeting(sender_id)
+                    send_buttons(sender_id)
+                    send_quick_replies(sender_id)
 
-        # Обработка события "messages"
-        if data.get("object") == "page":
-            for entry in data.get("entry", []):
-                for messaging_event in entry.get("messaging", []):
-                    if "message" in messaging_event:
-                        sender_id = messaging_event["sender"]["id"]
-                        message_text = messaging_event["message"].get("text")
-                        if message_text:
-                            send_message(sender_id, f"Ты написал: {message_text}")
-        return jsonify({"status": "ok"}), 200
+    return "OK", 200
 
-
-def send_message(recipient_id, message_text):
-    payload = {
+# Отправка приветствия
+def send_greeting(recipient_id):
+    message_data = {
         "recipient": {"id": recipient_id},
-        "message": {"text": message_text}
+        "message": {
+            "text": "Привет! Добро пожаловать в нашу шаурму-империю! 🍗"
+        }
     }
-    headers = {
-        "Content-Type": "application/json"
+    call_send_api(message_data)
+
+# Отправка кнопок
+def send_buttons(recipient_id):
+    message_data = {
+        "recipient": {"id": recipient_id},
+        "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": "Что вы хотите заказать?",
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": "Шаурма с курицей",
+                            "payload": "SHAVERMA_CHICKEN"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Шаурма с говядиной",
+                            "payload": "SHAVERMA_BEEF"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Шаурма с овощами",
+                            "payload": "SHAVERMA_VEG"
+                        }
+                    ]
+                }
+            }
+        }
     }
-    params = {
-        "access_token": PAGE_ACCESS_TOKEN
+    call_send_api(message_data)
+
+# Отправка quick replies
+def send_quick_replies(recipient_id):
+    message_data = {
+        "recipient": {"id": recipient_id},
+        "message": {
+            "text": "Вы хотите заказать сейчас?",
+            "quick_replies": [
+                {
+                    "content_type": "text",
+                    "title": "Да, хочу!",
+                    "payload": "ORDER_YES"
+                },
+                {
+                    "content_type": "text",
+                    "title": "Не сейчас",
+                    "payload": "ORDER_NO"
+                }
+            ]
+        }
     }
+    call_send_api(message_data)
 
-    response = requests.post(FB_API_URL, headers=headers, params=params, json=payload)
-    if response.ok:
-        print("✅ Ответ отправлен.")
-    else:
-        print("❌ Ошибка при отправке:", response.text)
+# Функция отправки сообщения через API
+def call_send_api(message_data):
+    response = requests.post(
+        f'https://graph.facebook.com/v12.0/me/messages?access_token={PAGE_ACCESS_TOKEN}',
+        json=message_data
+    )
+    if response.status_code != 200:
+        print(f"Failed to send message: {response.text}")
 
-
-if __name__ == "__main__":
-    app.run(port=5000)
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
