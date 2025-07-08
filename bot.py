@@ -2,8 +2,11 @@ import os
 import requests
 from flask import Flask, request, jsonify
 import json
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
+
 
 # Убедитесь, что вы установили переменные окружения с токеном и верификационным кодом
 VERIFY_TOKEN = os.getenv("FB_VERIFY_TOKEN", "your_verify_token")  # Замените на ваш токен

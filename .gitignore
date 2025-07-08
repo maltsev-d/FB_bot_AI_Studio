@@ -13,3 +13,9 @@ __pycache__/
 # Игнорировать виртуальные окружения
 venv/
 env/
+
+
+bot.py
+run_ngrok.py
+all.py
+tests/
