@@ -15,7 +15,7 @@ venv/
 env/
 
 
-bot.py
-run_ngrok.py
-all.py
+
+tests/run_ngrok.py
+tests/all.py
 tests/

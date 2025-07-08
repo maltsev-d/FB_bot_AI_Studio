@@ -81,7 +81,7 @@ start_bot.bat
 
 ```gitignore
 .env
-run_ngrok.py
+tests/run_ngrok.py
 start_bot.bat
 __pycache__/
 *.pyc
