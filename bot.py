@@ -4,6 +4,10 @@ import json
 
 app = Flask(__name__)
 
+@app.route("/")
+def index():
+    return "✅ Бот работает!"
+
 @app.route('/webhook', methods=['GET'])
 def verify():
     from os import getenv
