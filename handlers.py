@@ -24,8 +24,9 @@ def webhook():
             for event in entry.get("messaging", []):
                 sender_id = event["sender"]["id"]
                 if event.get("postback"):
-                    payload = event["postback"]["payload"]
-                    handle_postback(sender_id, payload)
+                    payload = event["postback"].get("payload")
+                    if payload:
+                        handle_postback(sender_id, payload)
                 elif event.get("message"):
                     handle_message(sender_id, event["message"])
     return "ok", 200
