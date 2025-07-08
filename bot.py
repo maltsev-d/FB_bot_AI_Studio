@@ -105,8 +105,8 @@ def send_welcome(recipient_id):
     buttons = [
         {"type": "postback", "title": "🚀 Создать нового бота", "payload": "CREATE_BOT"},
         {"type": "postback", "title": "🔧 Настроить существующего", "payload": "CONFIGURE_BOT"},
-        {"type": "postback", "title": "📚 Узнать про возможности", "payload": "LEARN_CAPABILITIES"},
-        {"type": "postback", "title": "📞 Связаться с экспертом", "payload": "CONTACT_EXPERT"}
+        {"type": "postback", "title": "📚 Узнать про возможности", "payload": "LEARN_CAPABILITIES"}
+        #{"type": "postback", "title": "📞 Связаться с экспертом", "payload": "CONTACT_EXPERT"}
     ]
     send_button_template(recipient_id, text, buttons)
 
@@ -116,8 +116,8 @@ def send_main_menu(recipient_id):
     buttons = [
         {"type": "postback", "title": "🚀 Создать нового бота", "payload": "CREATE_BOT"},
         {"type": "postback", "title": "🔧 Настроить существующего", "payload": "CONFIGURE_BOT"},
-        {"type": "postback", "title": "📚 Узнать про возможности", "payload": "LEARN_CAPABILITIES"},
-        {"type": "postback", "title": "📞 Связаться с экспертом", "payload": "CONTACT_EXPERT"}
+        {"type": "postback", "title": "📚 Узнать про возможности", "payload": "LEARN_CAPABILITIES"}
+        #{"type": "postback", "title": "📞 Связаться с экспертом", "payload": "CONTACT_EXPERT"}
     ]
     send_button_template(recipient_id, text, buttons)
 
