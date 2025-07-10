@@ -47,14 +47,28 @@ def send_buttons(recipient_id):
                 "type": "template",
                 "payload": {
                     "template_type": "button",
-                    "text": "Что вас интересует?",
+                    "text": "Что тебя интересует? 👇",
                     "buttons": [
+                        {"type": "postback", "title": "Чем мы вообще занимаемся", "payload": "CAPABILITIES"},
+                        {"type": "postback", "title": "Цены", "payload": "PRICE_INFO"},
                         {"type": "postback", "title": "Создать бота", "payload": "CREATE_BOT"},
-                        {"type": "postback", "title": "Интеграции/ИИ", "payload": "CONFIGURE_BOT"},
-                        {"type": "postback", "title": "Цены и контакты", "payload": "PRICE_INFO"}
+                        {"type": "postback", "title": "FAQ you", "payload": "FAQ"}
                     ]
                 }
             }
         }
     }
     send_message(payload)
+
+def send_quick_replies(recipient_id):
+    payload = {
+        "recipient": {"id": recipient_id},
+        "message": {
+            "text": "Быстрое действие:",
+            "quick_replies": [
+                {"content_type": "text", "title": "Позвать кожанного ))))", "payload": "CALL_ME"}
+            ]
+        }
+    }
+    send_message(payload)
+
