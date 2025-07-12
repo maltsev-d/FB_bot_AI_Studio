@@ -5,30 +5,30 @@ from responses import RESPONSES
 
 app = Flask(__name__)
 
-# handle_postback — обрабатывает нажатия кнопок с payload из Facebook
 def handle_postback(sender_id, payload):
-    if payload == "CAPABILITIES":
-        send_text(sender_id, RESPONSES["capabilities"])
-    elif payload == "PRICE_INFO":
-        send_text(sender_id, RESPONSES["pricing"])
-    elif payload == "CREATE_BOT":
-        send_text(sender_id, RESPONSES["create_bot"])
-    elif payload == "FAQ":
-        send_text(sender_id, RESPONSES["faq"])
+    response = RESPONSES.get(payload.lower())
+    if response:
+        send_text(sender_id, response)
     else:
         send_text(sender_id, "Выбери, пожалуйста, кнопку ниже.")
-        send_buttons(sender_id)
+    send_buttons(sender_id)
 
-
-# handle_message — обрабатывает любые входящие сообщения (текст, quick_replies и др.)
 def handle_message(sender_id, message):
     text = message.get("text", "").lower()
-    if "привет" in text or "hi" in text or "hello" in text:
+    quick_payload = message.get("quick_reply", {}).get("payload", "").upper()
+
+    if any(greet in text for greet in ["привет", "hi", "hello"]):
         send_text(sender_id, RESPONSES["greeting"])
         send_buttons(sender_id)
         send_quick_replies(sender_id)
-    elif "call_me" in message.get("quick_reply", {}).get("payload", ""):
+
+    elif quick_payload == "CALL_ME":
         send_text(sender_id, "👌 Я уже вас заметил, жди ответа!")
+
+    elif quick_payload in RESPONSES:
+        send_text(sender_id, RESPONSES[quick_payload])
+        send_buttons(sender_id)
+
     else:
         send_text(sender_id, "Не понял тебя, выбери из кнопок ниже.")
         send_buttons(sender_id)
