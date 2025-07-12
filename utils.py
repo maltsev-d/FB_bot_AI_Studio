@@ -42,7 +42,7 @@ def send_quick_replies(recipient_id):
     payload = {
         "recipient": {"id": recipient_id},
         "message": {
-            "text": "👇 Быстрые действия:",
+            #"text": "👇 Быстрые действия:",
             "quick_replies": [
                 {"content_type": "text", "title": "Создать бота", "payload": "CREATE_BOT"},
                 {"content_type": "text", "title": "Доработать бота", "payload": "CONFIGURE_BOT"},
