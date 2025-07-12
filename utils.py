@@ -1,7 +1,7 @@
 import os
 import requests
 
-PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_TOKEN", "your_page_access_token")
+PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_TOKEN")
 FB_API_URL = f"https://graph.facebook.com/v18.0/me/messages?access_token={PAGE_ACCESS_TOKEN}"
 
 def send_message(payload):
@@ -45,9 +45,9 @@ def send_quick_replies(recipient_id):
         "message": {
             #"text": "👇 Быстрые действия:",
             "quick_replies": [
-                {"content_type": "text", "title": "🧠 Что мы делаем", "payload": "CAPABILITIES"},
-                {"content_type": "text", "title": "💸 Цены", "payload": "PRICING"},
-                {"content_type": "text", "title": "❓ FAQ", "payload": "FAQ"},
+                {"content_type": "text", "title": "Что мы делаем", "payload": "CAPABILITIES"},
+                {"content_type": "text", "title": "Цены", "payload": "PRICING"},
+                {"content_type": "text", "title": "FAQ", "payload": "FAQ"},
             ]
         }
     }

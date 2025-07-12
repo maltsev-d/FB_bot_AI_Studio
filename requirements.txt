@@ -3,6 +3,7 @@ flask
 python-dotenv
 requests
 gunicorn
+openpyxl
 #pyngrok
 #flask
 #requests
