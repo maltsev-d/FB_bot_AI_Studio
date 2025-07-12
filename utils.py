@@ -26,11 +26,12 @@ def send_buttons(recipient_id):
                 "type": "template",
                 "payload": {
                     "template_type": "button",
-                    "text": "Что тебя интересует? 👇",
+                    "text": "Что вас интересует? 👇",
                     "buttons": [
-                        {"type": "postback", "title": "Что мы делаем", "payload": "CAPABILITIES"},
-                        {"type": "postback", "title": "Цены", "payload": "PRICING"},
-                        {"type": "postback", "title": "Создать бота", "payload": "CREATE_BOT"}
+                        {"content_type": "text", "title": "📋 Кейсы", "payload": "CASES"},
+                        {"type": "postback", "title": "🤖 Создать бота/агента", "payload": "CREATE_BOT"},
+                        {"content_type": "text", "title": "⚙️ Доработать бота/агента", "payload": "CONFIGURE_BOT"}
+
                     ]
                 }
             }
@@ -44,12 +45,9 @@ def send_quick_replies(recipient_id):
         "message": {
             #"text": "👇 Быстрые действия:",
             "quick_replies": [
-                {"content_type": "text", "title": "Создать бота", "payload": "CREATE_BOT"},
-                {"content_type": "text", "title": "Доработать бота", "payload": "CONFIGURE_BOT"},
-                {"content_type": "text", "title": "Кейсы", "payload": "CASES"},
-                {"content_type": "text", "title": "Цены", "payload": "PRICING"},
-                {"content_type": "text", "title": "Позвать кожанного", "payload": "CALL_ME"},
-                {"content_type": "text", "title": "FAQ", "payload": "FAQ"},
+                {"type": "postback", "title": "🧠 Что мы делаем", "payload": "CAPABILITIES"},
+                {"content_type": "text", "title": "💸 Цены", "payload": "PRICING"},
+                {"content_type": "text", "title": "❓ FAQ", "payload": "FAQ"},
             ]
         }
     }
