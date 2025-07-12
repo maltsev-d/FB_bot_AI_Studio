@@ -45,9 +45,9 @@ def send_quick_replies(recipient_id):
         "message": {
             #"text": "👇 Быстрые действия:",
             "quick_replies": [
-                {"type": "postback", "title": "🧠 Что мы делаем", "payload": "CAPABILITIES"},
-                {"content_type": "text", "title": "💸 Цены", "payload": "PRICING"},
-                {"content_type": "text", "title": "❓ FAQ", "payload": "FAQ"},
+                {"type": "postback", "title": "Что мы делаем", "payload": "CAPABILITIES"},
+                {"content_type": "text", "title": "Цены", "payload": "PRICING"},
+                {"content_type": "text", "title": "FAQ", "payload": "FAQ"},
             ]
         }
     }
