@@ -28,9 +28,9 @@ def send_buttons(recipient_id):
                     "template_type": "button",
                     "text": "Что вас интересует? 👇",
                     "buttons": [
-                        {"content_type": "text", "title": "Кейсы", "payload": "CASES"},
-                        {"type": "postback", "title": "Создать бота/агента", "payload": "CREATE_BOT"},
-                        {"content_type": "text", "title": "Доработать бота/агента", "payload": "CONFIGURE_BOT"}
+                        {"type": "postback", "title": "📋 Кейсы", "payload": "CASES"},
+                        {"type": "postback", "title": "🤖 Создать бота/агента", "payload": "CREATE_BOT"},
+                        {"type": "postback", "title": "⚙️ Доработать бота/агента", "payload": "CONFIGURE_BOT"}
 
                     ]
                 }
@@ -45,9 +45,9 @@ def send_quick_replies(recipient_id):
         "message": {
             #"text": "👇 Быстрые действия:",
             "quick_replies": [
-                {"type": "postback", "title": "Что мы делаем", "payload": "CAPABILITIES"},
-                {"content_type": "text", "title": "Цены", "payload": "PRICING"},
-                {"content_type": "text", "title": "FAQ", "payload": "FAQ"},
+                {"content_type": "text", "title": "🧠 Что мы делаем", "payload": "CAPABILITIES"},
+                {"content_type": "text", "title": "💸 Цены", "payload": "PRICING"},
+                {"content_type": "text", "title": "❓ FAQ", "payload": "FAQ"},
             ]
         }
     }
