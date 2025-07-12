@@ -28,9 +28,9 @@ def send_buttons(recipient_id):
                     "template_type": "button",
                     "text": "Что вас интересует? 👇",
                     "buttons": [
-                        {"content_type": "text", "title": "📋 Кейсы", "payload": "CASES"},
-                        {"type": "postback", "title": "🤖 Создать бота/агента", "payload": "CREATE_BOT"},
-                        {"content_type": "text", "title": "⚙️ Доработать бота/агента", "payload": "CONFIGURE_BOT"}
+                        {"content_type": "text", "title": "Кейсы", "payload": "CASES"},
+                        {"type": "postback", "title": "Создать бота/агента", "payload": "CREATE_BOT"},
+                        {"content_type": "text", "title": "Доработать бота/агента", "payload": "CONFIGURE_BOT"}
 
                     ]
                 }
