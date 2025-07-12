@@ -3,7 +3,9 @@ flask
 python-dotenv
 requests
 gunicorn
-openpyxl
+gspread
+oauth2client
 #pyngrok
 #flask
 #requests
+#openpyxl
