@@ -43,7 +43,7 @@ def send_quick_replies(recipient_id):
     payload = {
         "recipient": {"id": recipient_id},
         "message": {
-            "text": "",  # текст обязателен для quick_replies
+            "text": "Быстрые действия:",  # текст обязателен для quick_replies
             "quick_replies": [
                 {"content_type": "text", "title": "Что мы делаем", "payload": "CAPABILITIES"},
                 {"content_type": "text", "title": "Цены", "payload": "PRICING"},
