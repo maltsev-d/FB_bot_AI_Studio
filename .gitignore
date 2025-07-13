@@ -4,6 +4,8 @@
 # Игнорировать PyCharm настройки и кэш
 .idea/
 
+creds_base64.txt
+
 # Игнорировать Python кэшированные файлы
 __pycache__/
 *.pyc
