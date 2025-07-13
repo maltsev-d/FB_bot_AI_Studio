@@ -4,8 +4,7 @@ from utils import send_text, send_buttons, send_quick_replies
 from responses import RESPONSES
 import requests
 import os
-from openpyxl import load_workbook
-from logger import log_message
+from logger import log_message, is_new_user
 
 PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_TOKEN")
 TG_BOT_TOKEN = os.getenv("TG_BOT_TOKEN")
@@ -38,20 +37,6 @@ def get_user_name(user_id):
     except Exception:
         return "Unknown"
 
-def is_new_user(user_id: str) -> bool:
-    if not os.path.exists(LOG_FILE):
-        return True  # файла нет — точно новый юзер
-
-    wb = load_workbook(LOG_FILE)
-    ws = wb.active
-
-    for row in ws.iter_rows(min_row=2, values_only=True):  # пропускаем заголовки
-        logged_id = str(row[1])  # второй столбец — user_id
-        if str(user_id) == logged_id:
-            return False
-
-    return True
-
 def handle_postback(sender_id, payload):
     name = get_user_name(sender_id)
     log_message(sender_id, name, "", payload)
@@ -66,10 +51,11 @@ def handle_message(sender_id, message):
     text = message.get("text", "").lower()
     quick_payload = message.get("quick_reply", {}).get("payload", "").upper()
     name = get_user_name(sender_id)
-    log_message(sender_id, name, text, quick_payload)
+
     if is_new_user(sender_id):
-        text = f"📩 <b>Новый пользователь начал диалог</b>:\nИмя: {name}\nID: {sender_id}\nПервое сообщение: {text}"
-        send_telegram_message(text)
+        send_telegram_message(f"📩 <b>Новый пользователь начал диалог</b>:\n"f"Имя: {name}\nID: {sender_id}\nСообщение: {text}")
+
+    log_message(sender_id, name, text, quick_payload)
 
     if any(greet in text for greet in ["привет", "добрый день", "здравствуйте", "hi", "hello"]):
         send_text(sender_id, RESPONSES["greeting"])
@@ -81,12 +67,12 @@ def handle_message(sender_id, message):
 
     elif quick_payload in RESPONSES:
         send_text(sender_id, RESPONSES[quick_payload])
-        send_buttons(sender_id)
+        #send_buttons(sender_id)
 
-    else:
-        send_text(sender_id, "Не понял вас, выберите из кнопок ниже.")
-        send_buttons(sender_id)
-        send_quick_replies(sender_id)
+    # else:
+    #     send_text(sender_id, "Не понял вас, выберите из кнопок ниже.")
+    #     send_buttons(sender_id)
+    #     send_quick_replies(sender_id)
 
 @app.route('/webhook', methods=['GET'])
 def verify():
