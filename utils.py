@@ -18,7 +18,7 @@ def send_text(recipient_id, text):
     }
     send_message(payload)
 
-def send_buttons(recipient_id):
+def send_buttons_1(recipient_id):
     payload = {
         "recipient": {"id": recipient_id},
         "message": {
@@ -26,7 +26,7 @@ def send_buttons(recipient_id):
                 "type": "template",
                 "payload": {
                     "template_type": "button",
-                    "text": "Что вас интересует? 👇",
+                    #"text": "Что вас интересует? 👇",
                     "buttons": [
                         {"type": "postback", "title": "📋 Кейсы", "payload": "CASES"},
                         {"type": "postback", "title": "🤖 Создать бота/агента", "payload": "CREATE_BOT"},
@@ -39,17 +39,38 @@ def send_buttons(recipient_id):
     }
     send_message(payload)
 
-def send_quick_replies(recipient_id):
+def send_buttons_2(recipient_id):
     payload = {
         "recipient": {"id": recipient_id},
         "message": {
-            "text": "Быстрые действия:",  # текст обязателен для quick_replies
-            "quick_replies": [
-                {"content_type": "text", "title": "Что мы делаем", "payload": "CAPABILITIES"},
-                {"content_type": "text", "title": "Цены", "payload": "PRICING"},
-                {"content_type": "text", "title": "FAQ", "payload": "FAQ"},
-            ]
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": "Что вас интересует? 👇",
+                    "buttons": [
+                        {"type": "postback", "title": "🧠 Что мы делаем", "payload": "CAPABILITIES"},
+                        {"type": "postback", "title": "💸 Цены", "payload": "PRICING"},
+                        {"type": "postback", "title": "⚙❓ FAQ", "payload": "FAQ"}
+
+                    ]
+                }
+            }
         }
     }
     send_message(payload)
+
+# def send_quick_replies(recipient_id):
+#     payload = {
+#         "recipient": {"id": recipient_id},
+#         "message": {
+#             "text": "Быстрые действия:",  # текст обязателен для quick_replies
+#             "quick_replies": [
+#                 {"content_type": "text", "title": "Что мы делаем", "payload": "CAPABILITIES"},
+#                 {"content_type": "text", "title": "Цены", "payload": "PRICING"},
+#                 {"content_type": "text", "title": "FAQ", "payload": "FAQ"},
+#             ]
+#         }
+#     }
+#     send_message(payload)
 

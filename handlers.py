@@ -1,6 +1,6 @@
 from flask import Flask, request
 import json
-from utils import send_text, send_buttons, send_quick_replies
+from utils import send_text, send_buttons_1, send_buttons_2
 from responses import RESPONSES
 import requests
 import os
@@ -45,7 +45,8 @@ def handle_postback(sender_id, payload):
         send_text(sender_id, response)
     else:
         send_text(sender_id, "Выберите, пожалуйста, кнопку ниже.")
-    send_buttons(sender_id)
+    send_buttons_1(sender_id)
+    send_buttons_2(sender_id)
 
 def handle_message(sender_id, message):
     text = message.get("text", "").lower()
@@ -59,15 +60,16 @@ def handle_message(sender_id, message):
     if any(greet in text for greet in ["привет", "добрый день", "здравствуйте", "hi", "hello"]):
         # Только приветствие пользователю, не в Telegram
         send_text(sender_id, RESPONSES["greeting"])
-        send_buttons(sender_id)
-        send_quick_replies(recipient_id=sender_id)
+        send_buttons_1(sender_id)
+        send_buttons_2(sender_id)
 
     elif quick_payload == "CALL_ME":
         send_text(sender_id, "👌 Я уже вас заметил. Мы свяжемся с вами в ближайшее время.")
 
     elif quick_payload.lower() in RESPONSES:
         send_text(sender_id, RESPONSES[quick_payload.lower()])
-        send_buttons(sender_id)
+        send_buttons_1(sender_id)
+        send_buttons_2(sender_id)
     # else:
     #     send_text(sender_id, "Не понял вас, выберите из кнопок ниже.")
     #     send_buttons(sender_id)
