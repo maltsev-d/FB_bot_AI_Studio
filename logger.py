@@ -1,17 +1,31 @@
+import os
+import base64
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 
-GOOGLE_CREDS_FILE = "creds.json"  # путь к твоему JSON-ключу
-GOOGLE_SHEET_NAME = "FB Messages Log"  # название Google-таблицы
+GOOGLE_SHEET_NAME = "FB Messages Log"
+GOOGLE_CREDS_PATH = "/tmp/creds.json"
+
+def write_google_creds():
+    creds_base64 = os.getenv("GOOGLE_CREDS_BASE64")
+    if not creds_base64:
+        raise Exception("GOOGLE_CREDS_BASE64 не установлена")
+
+    with open(GOOGLE_CREDS_PATH, "wb") as f:
+        f.write(base64.b64decode(creds_base64))
+
 
 def get_sheet():
+    if not os.path.exists(GOOGLE_CREDS_PATH):
+        write_google_creds()
+
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(GOOGLE_CREDS_FILE, scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(GOOGLE_CREDS_PATH, scope)
     client = gspread.authorize(creds)
     sheet = client.open(GOOGLE_SHEET_NAME).sheet1
 
-    # Проверим, есть ли заголовки
+    # Проверка на заголовки
     if not sheet.row_values(1):
         sheet.append_row(["Дата", "ID пользователя", "Имя", "Сообщение", "Payload"])
 
