@@ -65,9 +65,9 @@ def handle_message(sender_id, message):
     elif quick_payload == "CALL_ME":
         send_text(sender_id, "👌 Я уже вас заметил. Мы свяжемся с вами в ближайшее время.")
 
-    elif quick_payload in RESPONSES:
-        send_text(sender_id, RESPONSES[quick_payload])
-        #send_buttons(sender_id)
+    elif quick_payload.lower() in RESPONSES:
+        send_text(sender_id, RESPONSES[quick_payload.lower()])
+        send_buttons(sender_id)
 
     # else:
     #     send_text(sender_id, "Не понял вас, выберите из кнопок ниже.")
