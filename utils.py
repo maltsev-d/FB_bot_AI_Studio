@@ -26,7 +26,7 @@ def send_buttons_1(recipient_id):
                 "type": "template",
                 "payload": {
                     "template_type": "button",
-                    #"text": "Что вас интересует? 👇",
+                    "text": " ",
                     "buttons": [
                         {"type": "postback", "title": "📋 Кейсы", "payload": "CASES"},
                         {"type": "postback", "title": "🤖 Создать бота/агента", "payload": "CREATE_BOT"},
