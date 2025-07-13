@@ -26,7 +26,7 @@ def send_buttons_1(recipient_id):
                 "type": "template",
                 "payload": {
                     "template_type": "button",
-                    "text": " ",
+                    "text": "Что вас интересует?",
                     "buttons": [
                         {"type": "postback", "title": "📋 Кейсы", "payload": "CASES"},
                         {"type": "postback", "title": "🤖 Создать бота/агента", "payload": "CREATE_BOT"},
@@ -47,11 +47,11 @@ def send_buttons_2(recipient_id):
                 "type": "template",
                 "payload": {
                     "template_type": "button",
-                    "text": "Что вас интересует? 👇",
+                    "text": "Можно почитать:",
                     "buttons": [
                         {"type": "postback", "title": "🧠 Что мы делаем", "payload": "CAPABILITIES"},
                         {"type": "postback", "title": "💸 Цены", "payload": "PRICING"},
-                        {"type": "postback", "title": "⚙❓ FAQ", "payload": "FAQ"}
+                        {"type": "postback", "title": "❓ FAQ", "payload": "FAQ"}
 
                     ]
                 }
